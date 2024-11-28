@@ -5,12 +5,22 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.beadando.beadando.HelloController">
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Menu?>
+<VBox alignment="TOP_LEFT" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="org.beadando.beadando.HelloController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="0" left="0" right="0" top="0"/>
     </padding>
-
+    <MenuBar fx:id="menuBar">
+        <menus>
+            <Menu text="Teszt">
+                <items>
+                    <MenuItem text="Teszt beágyazott" onAction="#TesztMetod"/>
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
     <Label fx:id="welcomeText"/>
     <Button text="Hello!" onAction="#onHelloButtonClick"/>
 </VBox>

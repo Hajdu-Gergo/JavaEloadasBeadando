@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.beadando.beadando.MainController">
+    <top>
+        <MenuBar>
+            <Menu text="Adatbázis">
+                <MenuItem text="Olvas" onAction="#handleOlvas"/>
+                <MenuItem text="Olvas2" onAction="#handleOlvas2"/>
+                <MenuItem text="Ír" onAction="#handleIr"/>
+                <MenuItem text="Módosít" onAction="#handleModosit"/>
+                <MenuItem text="Töröl" onAction="#handleTorol"/>
+            </Menu>
+        </MenuBar>
+    </top>
+
+    <left>
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <!-- Szűrő mezők -->
+            <HBox spacing="10">
+                <Label text="Név:"/>
+                <TextField fx:id="filterName"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="Helyszín:"/>
+                <ComboBox fx:id="filterLocation"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="Rendezés:"/>
+                <RadioButton fx:id="sortByDate" text="Dátum"/>
+                <RadioButton fx:id="sortByName" text="Név"/>
+            </HBox>
+            <HBox spacing="10">
+                <CheckBox fx:id="filterRecent" text="Csak az utolsó 10 adat"/>
+            </HBox>
+            <Button text="Szűrés" onAction="#handleFilter"/>
+
+            <!-- Új rekord hozzáadása -->
+            <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+                <HBox spacing="10">
+                    <Label text="Új Dátum:"/>
+                    <TextField fx:id="newDatum"/>
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="Új Név:"/>
+                    <TextField fx:id="newNev"/>
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="Új Helyszín:"/>
+                    <TextField fx:id="newHelyszin"/>
+                </HBox>
+                <Button text="Új rekord hozzáadása" onAction="#handleAddRecord"/>
+            </VBox>
+
+            <!-- Rekord módosítása -->
+            <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+                <HBox spacing="10">
+                    <Label text="Válassz rekordot:"/>
+                    <ComboBox fx:id="modifyComboBox"/>
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="Módosított Dátum:"/>
+                    <TextField fx:id="modifyDatum"/>
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="Módosított Név:"/>
+                    <TextField fx:id="modifyNev"/>
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="Módosított Helyszín:"/>
+                    <TextField fx:id="modifyHelyszin"/>
+                </HBox>
+                <Button text="Rekord módosítása" onAction="#handleModifyRecord"/>
+            </VBox>
+
+            <!-- Rekord törlése -->
+            <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+                <HBox spacing="10">
+                    <Label text="Válassz rekordot törléshez:"/>
+                    <ComboBox fx:id="deleteComboBox"/>
+                </HBox>
+                <Button text="Rekord törlése" onAction="#handleDeleteRecord"/>
+            </VBox>
+
+        </VBox>
+    </left>
+
+    <center>
+        <VBox fx:id="dataView" spacing="10" alignment="CENTER">
+            <!-- ComboBox a táblák közötti váltáshoz -->
+            <ComboBox fx:id="tableSelectComboBox" onAction="#handleTableSelection" promptText="Válassz egy táblát"/>
+
+            <!-- StackPane, amely az összes táblát tartalmazza -->
+            <StackPane fx:id="tableStackPane">
+                <!-- Táblázatok -->
+                <TableView fx:id="gpTableView" visible="false">
+                    <columns>
+                        <TableColumn fx:id="gpColDatum" text="Dátum"/>
+                        <TableColumn fx:id="gpColNev" text="Név"/>
+                        <TableColumn fx:id="gpColHelyszin" text="Helyszín"/>
+                    </columns>
+                </TableView>
+
+                <TableView fx:id="pilotaTableView" visible="false">
+                    <columns>
+                        <TableColumn fx:id="pilotaColNev" text="Név"/>
+                        <TableColumn fx:id="pilotaColNem" text="Nem"/>
+                        <TableColumn fx:id="pilotaColSzuldat" text="Születési dátum"/>
+                        <TableColumn fx:id="pilotaColNemzet" text="Nemzet"/>
+                    </columns>
+                </TableView>
+
+                <TableView fx:id="eredmenyTableView" visible="false">
+                    <columns>
+                        <TableColumn fx:id="eredmenyColDatum" text="Dátum" />
+                        <TableColumn fx:id="eredmenyColPilotaaz" text="Pilóta ID" />
+                        <TableColumn fx:id="eredmenyColHelyezes" text="Helyezés" />
+                        <TableColumn fx:id="eredmenyColHiba" text="Hiba" />
+                        <TableColumn fx:id="eredmenyColCsapat" text="Csapat" />
+                        <TableColumn fx:id="eredmenyColTipus" text="Típus" />
+                        <TableColumn fx:id="eredmenyColMotor" text="Motor" />
+                    </columns>
+                </TableView>
+            </StackPane>
+        </VBox>
+    </center>
+
+</BorderPane>

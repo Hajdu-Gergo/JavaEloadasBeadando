@@ -3,6 +3,7 @@ module org.beadando.beadando {
     requires javafx.fxml;
 
     requires org.kordamp.bootstrapfx.core;
+    requires java.sql;
 
     opens org.beadando.beadando to javafx.fxml;
     exports org.beadando.beadando;

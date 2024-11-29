@@ -3,10 +3,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.chart.CategoryAxis?>
 <VBox alignment="TOP_LEFT" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.beadando.beadando.HelloController">
     <padding>
         <Insets bottom="0" left="0" right="0" top="0" />
@@ -20,6 +22,11 @@
          </Label>
          <Label alignment="TOP_LEFT" text="A felmerült hiba miatt itt kerül megjelenítésre az külön letöltött adatokból készült grafikon." />
          <Label alignment="TOP_LEFT" text="Módosításához az MNB SOAP konzolos alkalmazásban kell megváltoztatni a letöltést." />
+         <Button fx:id="OpenFile" alignment="CENTER" mnemonicParsing="false" text="Fájl megnyitása" onAction="#Beolvas">
+            <VBox.margin>
+               <Insets top="10.0" />
+            </VBox.margin>
+         </Button>
       </children>
       <opaqueInsets>
          <Insets />
@@ -30,12 +37,12 @@
    </VBox>
    <VBox alignment="CENTER" spacing="20.0">
       <children>
-         <LineChart fx:id="chart1">
+         <LineChart fx:id="grafikon">
             <xAxis>
-               <NumberAxis fx:id="yearAxis" label="Year" />
+               <CategoryAxis fx:id="datum" autoRanging="true" label="Dátum" />
             </xAxis>
             <yAxis>
-               <NumberAxis fx:id="populationAxis" autoRanging="false" label="Population" lowerBound="-100" tickUnit="100" upperBound="500" />
+               <NumberAxis fx:id="ertek" autoRanging="true" label="Árfolyam" />
             </yAxis>
          </LineChart>
       </children>

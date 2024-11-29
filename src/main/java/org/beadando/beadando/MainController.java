@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
+import java.time.format.DateTimeFormatter;
 
 public class MainController {
     @FXML
@@ -69,7 +70,16 @@ public class MainController {
 
 
     @FXML
-    private TextField filterName;
+    private DatePicker filterDate;  // Új DatePicker vezérlő
+
+    @FXML
+    private DatePicker newDatePicker; // Új rekordhoz
+    @FXML
+    private DatePicker modifyDatePicker; // Rekord módosításához
+
+
+    @FXML
+    private TextField filterNev;
 
     @FXML
     private ComboBox<String> filterLocation;
@@ -149,31 +159,33 @@ public class MainController {
     }
 
     private void loadDeleteOptions() {
+        ObservableList<String> options = FXCollections.observableArrayList();
         try (Connection conn = DatabaseHelper.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT nev, datum FROM gp")) {
+             ResultSet rs = stmt.executeQuery("SELECT nev, datum FROM gp ORDER BY datum DESC")) {  // Csak azokat az elemeket töltjük be, amik elérhetőek
 
-            ObservableList<String> records = FXCollections.observableArrayList();
             while (rs.next()) {
-                records.add(rs.getString("nev") + " - " + rs.getString("datum"));
+                String record = rs.getString("nev") + " - " + rs.getString("datum");
+                options.add(record);  // A törléshez szükséges rekordok betöltése
             }
-            deleteComboBox.setItems(records);
+            deleteComboBox.setItems(options);  // ComboBox frissítése
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
+
     private void loadModifyOptions() {
         try (Connection conn = DatabaseHelper.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT nev, datum FROM gp")) {
+             ResultSet rs = stmt.executeQuery("SELECT nev, datum FROM gp ORDER BY datum DESC")) {  // Csak azokat az elemeket töltjük be, amik elérhetőek
 
             ObservableList<String> records = FXCollections.observableArrayList();
             while (rs.next()) {
                 records.add(rs.getString("nev") + " - " + rs.getString("datum"));
             }
-            modifyComboBox.setItems(records);
+            modifyComboBox.setItems(records);  // A módosításhoz használt ComboBox frissítése
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -215,11 +227,12 @@ public class MainController {
             while (rs.next()) {
                 gpList.add(new GP(rs.getString("datum"), rs.getString("nev"), rs.getString("helyszin")));
             }
-            gpTableView.setItems(gpList);
+            gpTableView.setItems(gpList);  // A GP táblázat frissítése
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     // Betöltjük a pilota tábla adatait
     private void loadPilotaData() {
@@ -264,7 +277,6 @@ public class MainController {
     }
 
 
-
     // Szűrőelemek feltöltése
     private void loadFilterOptions() {
         try (Connection conn = DatabaseHelper.getConnection();
@@ -293,18 +305,26 @@ public class MainController {
         System.out.println("Olvas2 szűrési lehetőség");
     }
 
-    // Szűrési logika
+    // Szűrési logika a GP táblára
     @FXML
     private void handleFilter() {
-        String datum = filterName.getText().trim();
-        String location = filterLocation.getValue();
-        boolean recentOnly = filterRecent.isSelected();
-        boolean sortByDateSelected = sortByDate.isSelected();
+        String location = filterLocation.getValue(); // Szűrés helyszín alapján
+        boolean recentOnly = filterRecent.isSelected(); // Csak az utolsó 10 adat megjelenítése
+        boolean sortByDateSelected = sortByDate.isSelected(); // Dátum szerinti rendezés
 
-        String query = "SELECT datum, pilota_id, helyezes FROM eredmeny WHERE 1=1";
+        // Dátum formázása az adatbázis formátumához
+        String datum = "";
+        if (filterDate.getValue() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+            datum = filterDate.getValue().format(formatter);
+        }
 
+        // Alap SQL lekérdezés
+        String query = "SELECT datum, nev, helyszin FROM gp WHERE 1=1";
+
+        // Szűrési feltételek hozzáadása
         if (!datum.isEmpty()) {
-            query += " AND datum LIKE '%" + datum + "%'";  // Szűrés dátum alapján
+            query += " AND datum = '" + datum + "'";
         }
         if (location != null && !location.isEmpty()) {
             query += " AND helyszin = '" + location + "'";
@@ -314,29 +334,27 @@ public class MainController {
         } else if (sortByDateSelected) {
             query += " ORDER BY datum";
         } else {
-            query += " ORDER BY pilota_id";
+            query += " ORDER BY nev";
         }
 
-        ObservableList<Eredmeny> eredmenyList = FXCollections.observableArrayList();
+        // GP lista inicializálása
+        ObservableList<GP> filteredGPList = FXCollections.observableArrayList();
 
         try (Connection conn = DatabaseHelper.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
+            // Adatok beolvasása a GP táblából
             while (rs.next()) {
-                // Az összes mezőt beolvassuk és hozzárendeljük az Eredmeny objektumhoz
-                eredmenyList.add(new Eredmeny(
+                filteredGPList.add(new GP(
                         rs.getString("datum"),
-                        rs.getInt("pilotaaz"),
-                        rs.getInt("helyezes"),
-                        rs.getString("hiba"),
-                        rs.getString("csapat"),
-                        rs.getString("tipus"),
-                        rs.getString("motor")
+                        rs.getString("nev"),
+                        rs.getString("helyszin")
                 ));
             }
 
-            eredmenyTableView.setItems(eredmenyList);
+            // Táblázat frissítése a szűrt adatokkal
+            gpTableView.setItems(filteredGPList);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -380,11 +398,13 @@ public class MainController {
 
     @FXML
     private void handleAddRecord() {
-        String datum = newDatum.getText().trim();
+        String datum = (newDatePicker.getValue() != null)
+                ? newDatePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+                : null;
         String nev = newNev.getText().trim();
         String helyszin = newHelyszin.getText().trim();
 
-        if (datum.isEmpty() || nev.isEmpty() || helyszin.isEmpty()) {
+        if (datum == null || nev.isEmpty() || helyszin.isEmpty()) {
             // Figyelmeztetés, ha valamelyik mező üres
             System.out.println("Minden mezőt ki kell tölteni!");
             return;
@@ -404,6 +424,8 @@ public class MainController {
             if (rowsAffected > 0) {
                 System.out.println("Sikeresen hozzáadva az új rekord!");
                 loadGPData();  // Frissítjük az adatokat a táblázatban
+                loadDeleteOptions();  // Frissítjük a törléshez használható opciókat
+                loadModifyOptions();  // Frissítjük a módosításhoz használható opciókat
             } else {
                 System.out.println("Hiba történt a rekord hozzáadása közben.");
             }
@@ -412,6 +434,9 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
+
+
 
     @FXML
     private void handleModifyRecord() {
@@ -426,11 +451,13 @@ public class MainController {
         String nev = parts[0];
         String datum = parts[1];
 
-        String modifiedDatum = modifyDatum.getText().trim();
+        String modifiedDatum = (modifyDatePicker.getValue() != null)
+                ? modifyDatePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+                : null;
         String modifiedNev = modifyNev.getText().trim();
         String modifiedHelyszin = modifyHelyszin.getText().trim();
 
-        if (modifiedDatum.isEmpty() || modifiedNev.isEmpty() || modifiedHelyszin.isEmpty()) {
+        if (modifiedDatum == null || modifiedNev.isEmpty() || modifiedHelyszin.isEmpty()) {
             System.out.println("Minden mezőt ki kell tölteni!");
             return;
         }
@@ -450,7 +477,9 @@ public class MainController {
 
             if (rowsAffected > 0) {
                 System.out.println("Sikeresen módosítva a rekord!");
-                loadGPData();  // Frissítjük az adatokat a táblázatban
+                loadGPData();  // Frissítjük a GP táblázatot
+                loadDeleteOptions();  // Frissítjük a törléshez használt ComboBox-ot
+                loadModifyOptions();  // Frissítjük a módosításhoz használt ComboBox-ot
             } else {
                 System.out.println("Hiba történt a rekord módosítása közben.");
             }
@@ -460,32 +489,41 @@ public class MainController {
         }
     }
 
+
+
     @FXML
     private void handleDeleteRecord() {
         String selectedRecord = deleteComboBox.getValue();
-        if (selectedRecord == null) {
-            System.out.println("Nincs rekord kiválasztva!");
+        if (selectedRecord == null || !selectedRecord.contains(" - ")) {
+            System.out.println("Nincs megfelelő rekord kiválasztva!");
             return;
         }
 
-        // Az azonosító helyett most a 'nev' és 'datum' alapján dolgozunk
+        // Az azonosító helyett a 'nev' és 'datum' mezőkre alapozunk
         String[] parts = selectedRecord.split(" - ");
-        String nev = parts[0];
-        String datum = parts[1];
+        if (parts.length < 2) {
+            System.out.println("Érvénytelen formátumú rekord!");
+            return;
+        }
+
+        String nev = parts[0].trim();
+        String datum = parts[1].trim();
 
         String query = "DELETE FROM gp WHERE nev = ? AND datum = ?";
 
         try (Connection conn = DatabaseHelper.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, nev);  // Kiválasztott rekord neve
-            stmt.setString(2, datum);  // Kiválasztott rekord dátuma
+            stmt.setString(1, nev);
+            stmt.setString(2, datum);
 
             int rowsAffected = stmt.executeUpdate();
 
             if (rowsAffected > 0) {
                 System.out.println("Sikeresen törölve a rekord!");
                 loadGPData();  // Frissítjük az adatokat a táblázatban
+                loadDeleteOptions();  // Frissítjük a törléshez használható opciókat
+                loadModifyOptions();  // Frissítjük a módosításhoz használható opciókat
             } else {
                 System.out.println("Hiba történt a rekord törlése közben.");
             }
@@ -495,20 +533,11 @@ public class MainController {
         }
     }
 
-
-
-
-
-
-    // Handle Módosít - Rekord módosítása
     @FXML
-    private void handleModosit() {
-        System.out.println("Rekord módosítása");
+    private void handleFormula1CRUD() {
+        // Itt hívhatod meg a már meglévő alkalmazásod, amely megjeleníti a Formula-1 CRUD felületet
+        System.out.println("Formula-1 CRUD ablak megjelenítése");
+        // A kívánt alkalmazás ablakának megnyitásához implementáld itt a szükséges logikát
     }
 
-    // Handle Töröl - Rekord törlés
-    @FXML
-    private void handleTorol() {
-        System.out.println("Rekord törlése");
-    }
 }

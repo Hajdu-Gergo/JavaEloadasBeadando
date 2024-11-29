@@ -4,23 +4,23 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.beadando.beadando.MainController">
     <top>
-        <MenuBar>
-            <Menu text="Adatbázis">
-                <MenuItem text="Olvas" onAction="#handleOlvas"/>
-                <MenuItem text="Olvas2" onAction="#handleOlvas2"/>
-                <MenuItem text="Ír" onAction="#handleIr"/>
-                <MenuItem text="Módosít" onAction="#handleModosit"/>
-                <MenuItem text="Töröl" onAction="#handleTorol"/>
-            </Menu>
-        </MenuBar>
+        <ToolBar>
+            <Button text="Formula-1 CRUD" onAction="#handleFormula1CRUD" />
+        </ToolBar>
     </top>
+
 
     <left>
         <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <Label text="Formula-1 CRUD műveletek a GP táblára:" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
             <!-- Szűrő mezők -->
             <HBox spacing="10">
+                <Label text="Dátum:"/>
+                <DatePicker fx:id="filterDate"/>
+            </HBox>
+            <HBox spacing="10">
                 <Label text="Név:"/>
-                <TextField fx:id="filterName"/>
+                <TextField fx:id="filterNev"/>
             </HBox>
             <HBox spacing="10">
                 <Label text="Helyszín:"/>
@@ -40,7 +40,7 @@
             <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
                 <HBox spacing="10">
                     <Label text="Új Dátum:"/>
-                    <TextField fx:id="newDatum"/>
+                    <DatePicker fx:id="newDatePicker"/>
                 </HBox>
                 <HBox spacing="10">
                     <Label text="Új Név:"/>
@@ -61,7 +61,7 @@
                 </HBox>
                 <HBox spacing="10">
                     <Label text="Módosított Dátum:"/>
-                    <TextField fx:id="modifyDatum"/>
+                    <DatePicker fx:id="modifyDatePicker"/>
                 </HBox>
                 <HBox spacing="10">
                     <Label text="Módosított Név:"/>

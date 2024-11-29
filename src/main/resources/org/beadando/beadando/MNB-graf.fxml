@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_LEFT" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.beadando.beadando.HelloController">
+    <padding>
+        <Insets bottom="0" left="0" right="0" top="0" />
+    </padding>
+   <VBox prefHeight="100.0" prefWidth="100.0">
+      <children>
+         <Label alignment="TOP_LEFT" text="Grafikon">
+            <font>
+               <Font size="48.0" />
+            </font>
+         </Label>
+         <Label alignment="TOP_LEFT" text="A felmerült hiba miatt itt kerül megjelenítésre az külön letöltött adatokból készült grafikon." />
+         <Label alignment="TOP_LEFT" text="Módosításához az MNB SOAP konzolos alkalmazásban kell megváltoztatni a letöltést." />
+      </children>
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets>
+      <padding>
+         <Insets left="10.0" top="10.0" />
+      </padding>
+   </VBox>
+   <VBox alignment="CENTER" spacing="20.0">
+      <children>
+         <LineChart fx:id="chart1">
+            <xAxis>
+               <NumberAxis fx:id="yearAxis" label="Year" />
+            </xAxis>
+            <yAxis>
+               <NumberAxis fx:id="populationAxis" autoRanging="false" label="Population" lowerBound="-100" tickUnit="100" upperBound="500" />
+            </yAxis>
+         </LineChart>
+      </children>
+   </VBox>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</VBox>

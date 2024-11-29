@@ -14,9 +14,9 @@
     </padding>
     <MenuBar fx:id="menuBar">
         <menus>
-            <Menu text="Teszt">
+            <Menu text="SOAP">
                 <items>
-                    <MenuItem text="Teszt beágyazott" onAction="#TesztMetod"/>
+                    <MenuItem text="Grafikon" onAction="#TesztMetod"/>
                 </items>
             </Menu>
         </menus>

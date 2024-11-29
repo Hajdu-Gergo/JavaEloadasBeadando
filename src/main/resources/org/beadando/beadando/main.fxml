@@ -3,12 +3,6 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.beadando.beadando.MainController">
-    <top>
-        <ToolBar>
-            <Button text="Formula-1 CRUD" onAction="#handleFormula1CRUD" />
-        </ToolBar>
-    </top>
-
 
     <left>
         <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">

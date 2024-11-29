@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.chart.CategoryAxis?>
-<VBox alignment="TOP_LEFT" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.beadando.beadando.HelloController">
+<VBox alignment="TOP_LEFT" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.beadando.beadando.MNBController">
     <padding>
         <Insets bottom="0" left="0" right="0" top="0" />
     </padding>

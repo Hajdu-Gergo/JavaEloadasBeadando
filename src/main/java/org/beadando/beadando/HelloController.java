@@ -55,61 +55,21 @@ public class HelloController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
-    @FXML
-    LineChart<String, Number> grafikon;
 
-    @FXML
-    public void Beolvas() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT fájlok", "*.txt"));
-        File selectedFile = fileChooser.showOpenDialog(null);
 
-        if (selectedFile != null) {
-            GrafBeolvas(grafikon, selectedFile);
-        }
-    }
 
-    @FXML
-    public void GrafBeolvas(LineChart<String, Number> grafikon, File fajl) {
 
-        Map<String, XYChart.Series<String, Number>> seriesMap = new HashMap<>();
 
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(fajl);
 
-            NodeList days = doc.getElementsByTagName("Day");
-            for (int i = 0; i < days.getLength(); i++) {
-                Element day = (Element) days.item(i);
-                String date = day.getAttribute("date");
+    public void adatbazismegnyit(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        Scene scene = new Scene(root);
 
-                NodeList rates = day.getElementsByTagName("Rate");
-                for (int j = 0; j < rates.getLength(); j++) {
-                    Element rateElement = (Element) rates.item(j);
-                    String currency = rateElement.getAttribute("curr");
-                    String rateStr = rateElement.getTextContent().replace(",", ".");
-                    double rate = Double.parseDouble(rateStr);
+        Stage stage = new Stage();
 
-                    // Series lekérése vagy létrehozása valutánként
-                    XYChart.Series<String, Number> series = seriesMap.computeIfAbsent(currency, curr -> {
-                        XYChart.Series<String, Number> newSeries = new XYChart.Series<>();
-                        newSeries.setName(curr + " árfolyam");
-                        return newSeries;
-                    });
-
-                    // Adatok hozzáadása a sorozathoz
-                    series.getData().add(new XYChart.Data<>(date, rate));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Minden series hozzáadása a chart-hoz
-        for (XYChart.Series<String, Number> series : seriesMap.values()) {
-            grafikon.getData().add(series);
-        }
-
+        stage.setTitle("Crud");
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
 }

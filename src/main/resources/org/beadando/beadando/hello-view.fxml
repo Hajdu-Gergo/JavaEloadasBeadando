@@ -14,6 +14,17 @@
     </padding>
     <MenuBar fx:id="menuBar">
         <menus>
+            <Menu text="Adatbázis">
+                <items>
+                    <MenuItem text="Olvas" onAction="#adatbazismegnyit"/>
+                    <MenuItem text="Olvas 2" onAction="#adatbazismegnyit"/>
+                    <MenuItem text="Ír" onAction="#adatbazismegnyit"/>
+                    <MenuItem text="Módosít" onAction="#adatbazismegnyit"/>
+                    <MenuItem text="Töröl" onAction="#adatbazismegnyit"/>
+                </items>
+            </Menu>
+        </menus>
+        <menus>
             <Menu text="SOAP">
                 <items>
                     <MenuItem text="Grafikon" onAction="#TesztMetod"/>

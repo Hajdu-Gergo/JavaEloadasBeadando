@@ -1,18 +1,22 @@
 package org.beadando.beadando;
 
+import com.oanda.v20.instrument.Candlestick;
+import com.oanda.v20.instrument.InstrumentCandlesResponse;
+import com.oanda.v20.primitives.DateTime;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.*;
 
 import java.lang.management.ClassLoadingMXBean;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -23,12 +27,23 @@ public class ForexController implements Initializable {
     @FXML
     TableView<Map.Entry<String, String>> tablazat;
 
-
     @FXML
     ComboBox<String> devizapar;
 
     @FXML
     Label kiir;
+
+    @FXML
+    DatePicker kezd;
+
+    @FXML
+    DatePicker veg;
+
+    @FXML
+    TableView<Map.Entry<String, String>> tablazat2;
+
+    @FXML
+    LineChart<String, Number> histgraf;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -96,13 +111,54 @@ public class ForexController implements Initializable {
 
         kiir.setText("1 " + baseCurrency + " = " + price + " "+quoteCurrency );
 
-        System.out.println("Base currency: " + baseCurrency);
+        /*System.out.println("Base currency: " + baseCurrency);
         System.out.println("Quote currency: " + quoteCurrency);
-        System.out.println("Price: " + price);
+        System.out.println("Price: " + price);*/
     }
     private static String extractValue(String data, String startToken, String endToken) {
         int startIndex = data.indexOf(startToken) + startToken.length();
         int endIndex = data.indexOf(endToken, startIndex);
         return data.substring(startIndex, endIndex).trim();
     }
+
+    public void lekerdezHistorikus(ActionEvent actionEvent) {
+        InstrumentCandlesResponse response = Oanda.getHistoricalData(devizapar.getValue(), new DateTime(kezd.getValue().toString()), new DateTime(veg.getValue().toString()));
+        Map<String, String> map = new LinkedHashMap<>();
+        for(Candlestick candle: response.getCandles())
+            map.put(candle.getTime().toString(), candle.getMid().getC().toString());
+        ObservableList<Map.Entry<String, String>> data = FXCollections.observableArrayList(map.entrySet());
+        if (tablazat2 == null) {
+            System.err.println("Táblázat nem létezik!");
+            return;
+        }
+        if(tablazat2.getColumns().isEmpty()) {
+            TableColumn<Map.Entry<String, String>, String> timeColumn = new TableColumn<>("time");
+            timeColumn.setCellValueFactory(data2 -> new SimpleStringProperty(data2.getValue().getKey()));
+            timeColumn.setText("Idő");
+
+            TableColumn<Map.Entry<String, String>, String> priceColumn = new TableColumn<>("price");
+            priceColumn.setCellValueFactory(data2 -> new SimpleStringProperty(data2.getValue().getValue()));
+            priceColumn.setText("Árfolyam");
+            tablazat2.getColumns().add(timeColumn);
+            tablazat2.getColumns().add(priceColumn);
+        }
+        tablazat2.getItems().clear();
+        tablazat2.getItems().addAll(data);
+        tablazat2.refresh();
+        grafkirajzol(data);
+    }
+    public void grafkirajzol(ObservableList<Map.Entry<String, String>>  map) {
+        System.out.println("Grafikon kirajzolása11...");
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+
+        System.out.println("Grafikon kirajzolása...");
+        for (Map.Entry<String, String> entry : map) {
+            String xValue = entry.getKey();  // X tengely értéke
+            double yValue = Double.parseDouble(entry.getValue());  // Y tengely értéke
+            series.getData().add(new XYChart.Data<>(xValue, yValue));
+        }
+
+        histgraf.getData().add(series);
+    }
+
 }

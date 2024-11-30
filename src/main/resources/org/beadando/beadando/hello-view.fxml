@@ -37,7 +37,7 @@
                 <items>
                     <MenuItem onAction="#szamlainfo" text="Számlainformáció" />
                     <MenuItem onAction="#aktarak" text="Aktuális árak" />
-                    <MenuItem onAction="#TesztMetod" text="Historikus árak" />
+                    <MenuItem onAction="#histarak" text="Historikus árak" />
                     <MenuItem onAction="#TesztMetod" text="Pozíció nyitás" />
                     <MenuItem onAction="#TesztMetod" text="Pozíció zárás" />
                     <MenuItem onAction="#TesztMetod" text="Nyitott pozíciók" />

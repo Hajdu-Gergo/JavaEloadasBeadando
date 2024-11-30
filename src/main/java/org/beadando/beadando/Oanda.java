@@ -5,6 +5,7 @@ import com.oanda.v20.ExecuteException;
 import com.oanda.v20.RequestException;
 import com.oanda.v20.account.AccountID;
 import com.oanda.v20.account.AccountSummary;
+import com.oanda.v20.instrument.Candlestick;
 import com.oanda.v20.instrument.CandlestickGranularity;
 import com.oanda.v20.instrument.InstrumentCandlesRequest;
 import com.oanda.v20.instrument.InstrumentCandlesResponse;
@@ -49,6 +50,26 @@ public class Oanda {
             response = ctx.pricing.get(request);
             System.out.println("Pricing: " + response);
             return response.getPrices().toString();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static InstrumentCandlesResponse getHistoricalData(String instrument, DateTime from, DateTime to) {
+        Context ctx = new Context("https://api-fxpractice.oanda.com", "e2cb5ade7b1d388aa7f72cdf8c74777e-da75f9dffbfe5b8b9b883149da2f030b");
+        AccountID accountID = new AccountID("101-004-30473865-001");
+        InstrumentCandlesRequest request = new InstrumentCandlesRequest(new InstrumentName(instrument));
+        request.setGranularity(CandlestickGranularity.H1);
+        request.setFrom(from);
+        request.setTo(to);
+        InstrumentCandlesResponse response;
+
+        try {
+            response = ctx.instrument.candles(request);
+            for(Candlestick candle: response.getCandles())
+                System.out.println(candle.getTime()+"\t"+candle.getMid().getC());
+            System.out.println("Historical Data: " + response.getCandles().toString());
+            return response;
         } catch (Exception e) {
             return null;
         }

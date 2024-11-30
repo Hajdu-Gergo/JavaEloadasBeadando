@@ -10,6 +10,7 @@
     <left>
         <!-- Új rekord hozzáadása -->
         <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <Label text="Formula-1 Ír művelet a GP táblára:" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
             <HBox spacing="10">
                 <Label text="Új Dátum:"/>
                 <DatePicker fx:id="newDatePicker"/>

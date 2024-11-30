@@ -10,6 +10,7 @@
     <left>
         <!-- Rekord törlése -->
         <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <Label text="Formula-1 Töröl művelet a GP táblára:" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
             <HBox spacing="10">
                 <Label text="Válassz rekordot törléshez:"/>
                 <ComboBox fx:id="deleteComboBox"/>

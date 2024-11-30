@@ -9,7 +9,7 @@
     <!-- Bal oldalon a szűrési opciók -->
     <left>
         <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
-            <Label text="Formula-1 CRUD műveletek a GP táblára:" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <Label text="Formula-1 Olvas2 művelet a GP táblára:" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
             <!-- Szűrő mezők -->
             <HBox spacing="10">
                 <Label text="Dátum:"/>

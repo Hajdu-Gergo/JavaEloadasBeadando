@@ -67,7 +67,7 @@ public class HelloController {
 
         Stage stage = new Stage();
 
-        stage.setTitle("Crud");
+        stage.setTitle("Olvas");
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
@@ -79,7 +79,7 @@ public class HelloController {
 
         Stage stage = new Stage();
 
-        stage.setTitle("Crud");
+        stage.setTitle("Olvas2");
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
@@ -91,7 +91,7 @@ public class HelloController {
 
         Stage stage = new Stage();
 
-        stage.setTitle("Crud");
+        stage.setTitle("Ir");
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
@@ -103,7 +103,7 @@ public class HelloController {
 
         Stage stage = new Stage();
 
-        stage.setTitle("Crud");
+        stage.setTitle("Modosit");
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
@@ -115,7 +115,7 @@ public class HelloController {
 
         Stage stage = new Stage();
 
-        stage.setTitle("Crud");
+        stage.setTitle("Torol");
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();

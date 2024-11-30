@@ -29,9 +29,11 @@ import java.util.Date;
 import java.util.List;
 
 public class Oanda {
+    public static Context ctx = new Context("https://api-fxpractice.oanda.com", "e2cb5ade7b1d388aa7f72cdf8c74777e-da75f9dffbfe5b8b9b883149da2f030b");
+    public static AccountID accountID = new AccountID("101-004-30473865-001");
+
     public static String getAccountSummary() {
-        Context ctx = new Context("https://api-fxpractice.oanda.com", "e2cb5ade7b1d388aa7f72cdf8c74777e-da75f9dffbfe5b8b9b883149da2f030b");
-        AccountID accountID = new AccountID("101-004-30473865-001");
+
         AccountSummary summary;
 
             try {
@@ -43,8 +45,7 @@ public class Oanda {
             }
     }
     public static String getPricing(String instrument) {
-        Context ctx = new Context("https://api-fxpractice.oanda.com", "e2cb5ade7b1d388aa7f72cdf8c74777e-da75f9dffbfe5b8b9b883149da2f030b");
-        AccountID accountID = new AccountID("101-004-30473865-001");
+
         PricingGetRequest request = new PricingGetRequest(accountID, List.of(instrument));
         PricingGetResponse response;
 
@@ -58,8 +59,7 @@ public class Oanda {
     }
 
     public static InstrumentCandlesResponse getHistoricalData(String instrument, DateTime from, DateTime to) {
-        Context ctx = new Context("https://api-fxpractice.oanda.com", "e2cb5ade7b1d388aa7f72cdf8c74777e-da75f9dffbfe5b8b9b883149da2f030b");
-        AccountID accountID = new AccountID("101-004-30473865-001");
+
         InstrumentCandlesRequest request = new InstrumentCandlesRequest(new InstrumentName(instrument));
         request.setGranularity(CandlestickGranularity.H1);
         request.setFrom(from);
@@ -78,11 +78,10 @@ public class Oanda {
     }
 
     public static TransactionID openTrade(String instrument, int units) {
-        Context ctx1 = new Context("https://api-fxpractice.oanda.com", "e2cb5ade7b1d388aa7f72cdf8c74777e-da75f9dffbfe5b8b9b883149da2f030b");
-        AccountID accountID1 = new AccountID("101-004-30473865-001");
+
         InstrumentName instrumentName = new InstrumentName(instrument);
         try {
-            OrderCreateRequest request = new OrderCreateRequest(accountID1);
+            OrderCreateRequest request = new OrderCreateRequest(accountID);
             MarketOrderRequest marketOrderRequest = new MarketOrderRequest();
             System.out.println("Instrument: " + instrumentName);
             System.out.println("Units: " + units);
@@ -91,7 +90,7 @@ public class Oanda {
             marketOrderRequest.setUnits(units);
             System.out.println("MarketOrderRequest: " + marketOrderRequest);
             request.setOrder(marketOrderRequest);
-            OrderCreateResponse response = ctx1.order.create(request);
+            OrderCreateResponse response = ctx.order.create(request);
             return response.getOrderFillTransaction().getId();
         } catch (Exception e) {
             System.out.println("Oanda API hiba - \nÜzenet: " + e.getMessage());
@@ -100,8 +99,7 @@ public class Oanda {
 
     }
     public static List<Trade> getTrades() {
-        Context ctx = new Context("https://api-fxpractice.oanda.com", "671b81420c1e7e9020aa39a044555251-23066734340c434485b049f98ee82a83");
-        AccountID accountID = new AccountID("101-004-27055954-001");
+
         try {
             return ctx.trade.list(accountID).getTrades();
         } catch (Exception e) {
@@ -112,8 +110,7 @@ public class Oanda {
 
 
     public static void closeTrade(String tradeID) {
-        Context ctx = new Context("https://api-fxpractice.oanda.com", "e2cb5ade7b1d388aa7f72cdf8c74777e-da75f9dffbfe5b8b9b883149da2f030b");
-        AccountID accountID = new AccountID("101-004-30473865-001");
+
         TradeSpecifier tradeSpecifier = new TradeSpecifier(tradeID);
         try {
             TradeCloseRequest request = new TradeCloseRequest(accountID, tradeSpecifier);

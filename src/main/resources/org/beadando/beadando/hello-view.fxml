@@ -34,7 +34,7 @@
         <menus>
             <Menu text="Párhuzamos feladat">
                 <items>
-                    <MenuItem onAction="#parhuzam" text="Parhuzamos feladat" />
+                    <MenuItem onAction="#parhuzam" text="Párhuzamos feladat" />
                 </items>
             </Menu>
         </menus>

@@ -6,42 +6,30 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.beadando.beadando.OlvasController">
-    <left>
-        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
-            <TableView fx:id="gpTableView" visible="true">
-                <columns>
-                    <TableColumn fx:id="gpColDatum" text="Dátum"/>
-                    <TableColumn fx:id="gpColNev" text="Név"/>
-                    <TableColumn fx:id="gpColHelyszin" text="Helyszín"/>
-                </columns>
-            </TableView>
-        </VBox>
-    </left>
     <center>
         <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
-            <TableView fx:id="eredmenyTableView" visible="true">
+            <TableView fx:id="tableView" visible="true">
                 <columns>
-                    <TableColumn fx:id="eredmenyColDatum" text="Dátum"/>
-                    <TableColumn fx:id="eredmenyColPilotaaz" text="Pilóta ID"/>
-                    <TableColumn fx:id="eredmenyColHiba" text="Hiba"/>
-                    <TableColumn fx:id="eredmenyColCsapat" text="Csapat"/>
-                    <TableColumn fx:id="eredmenyColTipus" text="Típus"/>
-                    <TableColumn fx:id="eredmenyColMotor" text="Motor"/>
-                    <TableColumn fx:id="eredmenyColHelyezes" text="Helyezés"/>
+                    <!-- GP tábla oszlopai -->
+                    <TableColumn fx:id="colDatum" text="Dátum"/>
+                    <TableColumn fx:id="colNev" text="Név"/>
+                    <TableColumn fx:id="colHelyszin" text="Helyszín"/>
+
+                    <!-- Eredmeny tábla oszlopai -->
+                    <TableColumn fx:id="colPilotaaz" text="Pilóta ID"/>
+                    <TableColumn fx:id="colHelyezes" text="Helyezés"/>
+                    <TableColumn fx:id="colHiba" text="Hiba"/>
+                    <TableColumn fx:id="colCsapat" text="Csapat"/>
+                    <TableColumn fx:id="colTipus" text="Típus"/>
+                    <TableColumn fx:id="colMotor" text="Motor"/>
+
+                    <!-- Pilota tábla oszlopai -->
+                    <TableColumn fx:id="colPilotaNev" text="Pilóta Név"/>
+                    <TableColumn fx:id="colPilotaNem" text="Pilóta Nem"/>
+                    <TableColumn fx:id="colPilotaSzuldat" text="Pilóta Születési Dátum"/>
+                    <TableColumn fx:id="colPilotaNemzet" text="Pilóta Nemzet"/>
                 </columns>
             </TableView>
         </VBox>
     </center>
-    <right>
-        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
-            <TableView fx:id="pilotaTableView" visible="true">
-                <columns>
-                    <TableColumn fx:id="pilotaColNev" text="Név"/>
-                    <TableColumn fx:id="pilotaColNem" text="Nem"/>
-                    <TableColumn fx:id="pilotaColSzuldat" text="Születési dátum"/>
-                    <TableColumn fx:id="pilotaColNemzet" text="Nemzetiség"/>
-                </columns>
-            </TableView>
-        </VBox>
-    </right>
 </BorderPane>

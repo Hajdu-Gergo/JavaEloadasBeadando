@@ -10,72 +10,49 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class OlvasController
-{
+public class OlvasController {
 
     @FXML
-    private TableView<GP> tableView;
-    @FXML
-    private TableColumn<GP, String> colDatum;
-    @FXML
-    private TableColumn<GP, String> colNev;
-    @FXML
-    private TableColumn<GP, String> colHelyszin;
-    @FXML
-    private TableView<GP> gpTableView;
+    private TableView<CombinedRecord> tableView;  // Kombinált rekordok táblázata
 
     @FXML
-    private ComboBox<String> tableSelectComboBox;
+    private TableColumn<CombinedRecord, String> colDatum;
+    @FXML
+    private TableColumn<CombinedRecord, String> colNev;
+    @FXML
+    private TableColumn<CombinedRecord, String> colHelyszin;
+    @FXML
+    private TableColumn<CombinedRecord, Integer> colPilotaaz;
+    @FXML
+    private TableColumn<CombinedRecord, Integer> colHelyezes;
+    @FXML
+    private TableColumn<CombinedRecord, String> colHiba;
+    @FXML
+    private TableColumn<CombinedRecord, String> colCsapat;
+    @FXML
+    private TableColumn<CombinedRecord, String> colTipus;
+    @FXML
+    private TableColumn<CombinedRecord, String> colMotor;
 
     @FXML
-    private TableColumn<GP, String> gpColDatum; // Hozzáadva a TableColumn
+    private TableColumn<CombinedRecord, String> colPilotaNev;
     @FXML
-    private TableColumn<GP, String> gpColNev;   // Hozzáadva a TableColumn
+    private TableColumn<CombinedRecord, String> colPilotaNem;
     @FXML
-    private TableColumn<GP, String> gpColHelyszin; // Hozzáadva a TableColumn
-
+    private TableColumn<CombinedRecord, String> colPilotaSzuldat;
     @FXML
-    private TableView<Pilota> pilotaTableView;
-    @FXML
-    private TableColumn<Pilota, String> pilotaColNev;
-    @FXML
-    private TableColumn<Pilota, String> pilotaColNem;
-    @FXML
-    private TableColumn<Pilota, String> pilotaColSzuldat;
-    @FXML
-    private TableColumn<Pilota, String> pilotaColNemzet;
-    @FXML
-    private TableView<Eredmeny> eredmenyTableView;
-
-    @FXML
-    private TableColumn<Eredmeny, String> eredmenyColDatum;
-    @FXML
-    private TableColumn<Eredmeny, Integer> eredmenyColPilotaaz;
-    @FXML
-    private TableColumn<Eredmeny, Integer> eredmenyColHelyezes;
-
-    @FXML
-    private TableColumn<Eredmeny, String> eredmenyColHiba;
-    @FXML
-    private TableColumn<Eredmeny, String> eredmenyColCsapat;
-    @FXML
-    private TableColumn<Eredmeny, String> eredmenyColTipus;
-    @FXML
-    private TableColumn<Eredmeny, String> eredmenyColMotor;
-
+    private TableColumn<CombinedRecord, String> colPilotaNemzet;
 
     @FXML
     private ComboBox<String> deleteComboBox;
 
-
     @FXML
-    private DatePicker filterDate;  // Új DatePicker vezérlő
+    private DatePicker filterDate;  // Szűrés dátumra
 
     @FXML
     private DatePicker newDatePicker; // Új rekordhoz
     @FXML
     private DatePicker modifyDatePicker; // Rekord módosításához
-
 
     @FXML
     private TextField filterNev;
@@ -115,92 +92,69 @@ public class OlvasController
 
     private ToggleGroup sortGroup; // ToggleGroup létrehozása
 
-    private ObservableList<GP> gpList = FXCollections.observableArrayList();
     @FXML
     public void initialize() {
 
-        // gp tábla oszlopainak beállítása
-        gpColDatum.setCellValueFactory(new PropertyValueFactory<>("datum"));
-        gpColNev.setCellValueFactory(new PropertyValueFactory<>("nev"));
-        gpColHelyszin.setCellValueFactory(new PropertyValueFactory<>("helyszin"));
+        // Kombinált rekordok oszlopainak beállítása
+        colDatum.setCellValueFactory(new PropertyValueFactory<>("datum"));
+        colNev.setCellValueFactory(new PropertyValueFactory<>("nev"));
+        colHelyszin.setCellValueFactory(new PropertyValueFactory<>("helyszin"));
+        colPilotaaz.setCellValueFactory(new PropertyValueFactory<>("pilotaaz"));
+        colHelyezes.setCellValueFactory(new PropertyValueFactory<>("helyezes"));
+        colHiba.setCellValueFactory(new PropertyValueFactory<>("hiba"));
+        colCsapat.setCellValueFactory(new PropertyValueFactory<>("csapat"));
+        colTipus.setCellValueFactory(new PropertyValueFactory<>("tipus"));
+        colMotor.setCellValueFactory(new PropertyValueFactory<>("motor"));
 
-        // pilota tábla oszlopainak beállítása
-        pilotaColNev.setCellValueFactory(new PropertyValueFactory<>("nev"));
-        pilotaColNem.setCellValueFactory(new PropertyValueFactory<>("nem"));
-        pilotaColSzuldat.setCellValueFactory(new PropertyValueFactory<>("szuldat"));
-        pilotaColNemzet.setCellValueFactory(new PropertyValueFactory<>("nemzet"));
+        // Pilóta adatok oszlopainak beállítása
+        colPilotaNev.setCellValueFactory(new PropertyValueFactory<>("pilotaNev"));
+        colPilotaNem.setCellValueFactory(new PropertyValueFactory<>("pilotaNem"));
+        colPilotaSzuldat.setCellValueFactory(new PropertyValueFactory<>("pilotaSzuldat"));
+        colPilotaNemzet.setCellValueFactory(new PropertyValueFactory<>("pilotaNemzet"));
 
-        // eredmeny tábla oszlopainak beállítása
-        eredmenyColDatum.setCellValueFactory(new PropertyValueFactory<>("datum"));
-        eredmenyColPilotaaz.setCellValueFactory(new PropertyValueFactory<>("pilotaaz"));
-        eredmenyColHelyezes.setCellValueFactory(new PropertyValueFactory<>("helyezes"));
-        eredmenyColHiba.setCellValueFactory(new PropertyValueFactory<>("hiba"));
-        eredmenyColCsapat.setCellValueFactory(new PropertyValueFactory<>("csapat"));
-        eredmenyColTipus.setCellValueFactory(new PropertyValueFactory<>("tipus"));
-        eredmenyColMotor.setCellValueFactory(new PropertyValueFactory<>("motor"));
-
-
-        loadGPData();
-        loadPilotaData();
-        loadEredmenyData();
+        // Az adatok betöltése
+        loadCombinedData();
     }
 
-    // Betöltjük a gp tábla adatait
-    private void loadGPData() {
+    // Betöltjük a kombinált adatokat
+    private void loadCombinedData() {
         try (Connection conn = DatabaseHelper.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT datum, nev, helyszin FROM gp")) {
+             Statement stmt = conn.createStatement()) {
 
-            ObservableList<GP> gpList = FXCollections.observableArrayList();
+            // Az SQL lekérdezés módosítása a megfelelő kulcsoszlop használatával
+            String query = "SELECT gp.datum, gp.nev, gp.helyszin, eredmeny.pilotaaz, eredmeny.helyezes, eredmeny.hiba, " +
+                    "eredmeny.csapat, eredmeny.tipus, eredmeny.motor, pilota.nev AS pilotaNev, pilota.nem AS pilotaNem, " +
+                    "pilota.szuldat AS pilotaSzuldat, pilota.nemzet AS pilotaNemzet " +
+                    "FROM gp " +
+                    "LEFT JOIN eredmeny ON gp.datum = eredmeny.datum " +
+                    "LEFT JOIN pilota ON eredmeny.pilotaaz = pilota.az";  // Itt az 'az' oszlop szerepel
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            ObservableList<CombinedRecord> combinedList = FXCollections.observableArrayList();
+
             while (rs.next()) {
-                gpList.add(new GP(rs.getString("datum"), rs.getString("nev"), rs.getString("helyszin")));
-            }
-            gpTableView.setItems(gpList);  // A GP táblázat frissítése
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    // Betöltjük a pilota tábla adatait
-    private void loadPilotaData() {
-        try (Connection conn = DatabaseHelper.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT nev, nem, szuldat, nemzet FROM pilota")) {
-
-            ObservableList<Pilota> pilotaList = FXCollections.observableArrayList();
-            while (rs.next()) {
-                pilotaList.add(new Pilota(rs.getString("nev"), rs.getString("nem"), rs.getString("szuldat"), rs.getString("nemzet")));
-            }
-            pilotaTableView.setItems(pilotaList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Betöltjük az eredmeny tábla adatait
-    private void loadEredmenyData() {
-        try (Connection conn = DatabaseHelper.getConnection();
-             Statement stmt = conn.createStatement();
-             // Lekérdezzük az összes oszlopot
-             ResultSet rs = stmt.executeQuery("SELECT datum, pilotaaz, helyezes, hiba, csapat, tipus, motor FROM eredmeny")) {
-
-            ObservableList<Eredmeny> eredmenyList = FXCollections.observableArrayList();
-            while (rs.next()) {
-                // Az összes mezőt beolvassuk és hozzárendeljük az Eredmeny objektumhoz
-                eredmenyList.add(new Eredmeny(
+                combinedList.add(new CombinedRecord(
                         rs.getString("datum"),
+                        rs.getString("nev"),
+                        rs.getString("helyszin"),
                         rs.getInt("pilotaaz"),
                         rs.getInt("helyezes"),
                         rs.getString("hiba"),
                         rs.getString("csapat"),
                         rs.getString("tipus"),
-                        rs.getString("motor")
+                        rs.getString("motor"),
+                        rs.getString("pilotaNev"),
+                        rs.getString("pilotaNem"),
+                        rs.getString("pilotaSzuldat"),
+                        rs.getString("pilotaNemzet")
                 ));
             }
-            eredmenyTableView.setItems(eredmenyList);  // Frissítjük a TableView-t
+
+            tableView.setItems(combinedList);  // A táblázat frissítése
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }

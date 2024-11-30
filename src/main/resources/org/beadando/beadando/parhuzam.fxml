@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.beadando.beadando.ParhuzamController">
+    <center>
+        <VBox spacing="20" alignment="CENTER" style="-fx-padding: 20;">
+            <Button text="Párhuzamos feladat elindítása" onAction="#startParallelTasks"/>
+            <Label fx:id="label1" text="1. címke - 1 másodpercenként fog frissíteni"/>
+            <Label fx:id="label2" text="2. címke - 2 másodpercenként fog frissíteni"/>
+            <Button fx:id="stopButton" text="Párhuzamos feladat leállítása" onAction="#stopParallelTasks" disable="true"/>
+        </VBox>
+    </center>
+</BorderPane>

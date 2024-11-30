@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.beadando.beadando.ModositController">
+    <!-- Bal oldalon a szűrési opciók -->
+    <left>
+        <!-- Rekord módosítása -->
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <Label text="Formula-1 Módosít művelet a GP táblára:" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <HBox spacing="10">
+                <Label text="Válassz rekordot:"/>
+                <ComboBox fx:id="modifyComboBox"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="Módosított Dátum:"/>
+                <DatePicker fx:id="modifyDatePicker"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="Módosított Név:"/>
+                <TextField fx:id="modifyNev"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="Módosított Helyszín:"/>
+                <TextField fx:id="modifyHelyszin"/>
+            </HBox>
+            <Button text="Rekord módosítása" onAction="#handleModifyRecord"/>
+        </VBox>
+    </left>
+
+    <!-- Jobb oldalon a GP tábla -->
+    <right>
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <TableView fx:id="gpTableView" visible="true">
+                <columns>
+                    <TableColumn fx:id="gpColDatum" text="Dátum"/>
+                    <TableColumn fx:id="gpColNev" text="Név"/>
+                    <TableColumn fx:id="gpColHelyszin" text="Helyszín"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </right>
+</BorderPane>

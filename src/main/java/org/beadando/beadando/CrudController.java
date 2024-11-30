@@ -1,6 +1,5 @@
 package org.beadando.beadando;
 
-import org.beadando.database.DatabaseHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -13,7 +12,7 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.time.format.DateTimeFormatter;
 
-public class MainController {
+public class CrudController {
     @FXML
     private TableView<GP> tableView;
     @FXML

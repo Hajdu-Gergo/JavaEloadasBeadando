@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.beadando.beadando.OlvasController">
+    <left>
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <TableView fx:id="gpTableView" visible="true">
+                <columns>
+                    <TableColumn fx:id="gpColDatum" text="Dátum"/>
+                    <TableColumn fx:id="gpColNev" text="Név"/>
+                    <TableColumn fx:id="gpColHelyszin" text="Helyszín"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </left>
+    <center>
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <TableView fx:id="eredmenyTableView" visible="true">
+                <columns>
+                    <TableColumn fx:id="eredmenyColDatum" text="Dátum"/>
+                    <TableColumn fx:id="eredmenyColPilotaaz" text="Pilóta ID"/>
+                    <TableColumn fx:id="eredmenyColHiba" text="Hiba"/>
+                    <TableColumn fx:id="eredmenyColCsapat" text="Csapat"/>
+                    <TableColumn fx:id="eredmenyColTipus" text="Típus"/>
+                    <TableColumn fx:id="eredmenyColMotor" text="Motor"/>
+                    <TableColumn fx:id="eredmenyColHelyezes" text="Helyezés"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+    <right>
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <TableView fx:id="pilotaTableView" visible="true">
+                <columns>
+                    <TableColumn fx:id="pilotaColNev" text="Név"/>
+                    <TableColumn fx:id="pilotaColNem" text="Nem"/>
+                    <TableColumn fx:id="pilotaColSzuldat" text="Születési dátum"/>
+                    <TableColumn fx:id="pilotaColNemzet" text="Nemzetiség"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </right>
+</BorderPane>

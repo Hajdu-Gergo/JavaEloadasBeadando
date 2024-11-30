@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.beadando.beadando.TorolController">
+    <!-- Bal oldalon a szűrési opciók -->
+    <left>
+        <!-- Rekord törlése -->
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <HBox spacing="10">
+                <Label text="Válassz rekordot törléshez:"/>
+                <ComboBox fx:id="deleteComboBox"/>
+            </HBox>
+            <Button text="Rekord törlése" onAction="#handleDeleteRecord"/>
+        </VBox>
+    </left>
+
+    <!-- Jobb oldalon a GP tábla -->
+    <right>
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <TableView fx:id="gpTableView" visible="true">
+                <columns>
+                    <TableColumn fx:id="gpColDatum" text="Dátum"/>
+                    <TableColumn fx:id="gpColNev" text="Név"/>
+                    <TableColumn fx:id="gpColHelyszin" text="Helyszín"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </right>
+</BorderPane>

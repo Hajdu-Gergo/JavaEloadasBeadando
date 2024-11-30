@@ -16,11 +16,11 @@
         <menus>
             <Menu text="Adatbázis">
                 <items>
-                    <MenuItem onAction="#adatbazismegnyit" text="Olvas" />
-                    <MenuItem onAction="#adatbazismegnyit" text="Olvas 2" />
-                    <MenuItem onAction="#adatbazismegnyit" text="Ír" />
-                    <MenuItem onAction="#adatbazismegnyit" text="Módosít" />
-                    <MenuItem onAction="#adatbazismegnyit" text="Töröl" />
+                    <MenuItem onAction="#olvas" text="Olvas" />
+                    <MenuItem onAction="#olvas2" text="Olvas 2" />
+                    <MenuItem onAction="#ir" text="Ír" />
+                    <MenuItem onAction="#modosit" text="Módosít" />
+                    <MenuItem onAction="#torol" text="Töröl" />
                 </items>
             </Menu>
         </menus>

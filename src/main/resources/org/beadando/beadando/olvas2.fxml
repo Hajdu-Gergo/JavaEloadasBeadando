@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.beadando.beadando.Olvas2Controller">
+    <!-- Bal oldalon a szűrési opciók -->
+    <left>
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <Label text="Formula-1 CRUD műveletek a GP táblára:" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <!-- Szűrő mezők -->
+            <HBox spacing="10">
+                <Label text="Dátum:"/>
+                <DatePicker fx:id="filterDate"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="Név:"/>
+                <TextField fx:id="filterNev"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="Helyszín:"/>
+                <ComboBox fx:id="filterLocation"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="Rendezés:"/>
+                <RadioButton fx:id="sortByDate" text="Dátum"/>
+                <RadioButton fx:id="sortByName" text="Név"/>
+            </HBox>
+            <HBox spacing="10">
+                <CheckBox fx:id="filterRecent" text="Csak az utolsó 10 adat"/>
+            </HBox>
+            <Button text="Szűrés" onAction="#handleFilter"/>
+        </VBox>
+    </left>
+
+    <!-- Jobb oldalon a GP tábla -->
+    <right>
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <TableView fx:id="gpTableView" visible="true">
+                <columns>
+                    <TableColumn fx:id="gpColDatum" text="Dátum"/>
+                    <TableColumn fx:id="gpColNev" text="Név"/>
+                    <TableColumn fx:id="gpColHelyszin" text="Helyszín"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </right>
+</BorderPane>

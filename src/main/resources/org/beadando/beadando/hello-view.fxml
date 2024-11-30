@@ -16,11 +16,11 @@
         <menus>
             <Menu text="Adatbázis">
                 <items>
-                    <MenuItem onAction="#adatbazismegnyit" text="Olvas" />
-                    <MenuItem onAction="#adatbazismegnyit" text="Olvas 2" />
-                    <MenuItem onAction="#adatbazismegnyit" text="Ír" />
-                    <MenuItem onAction="#adatbazismegnyit" text="Módosít" />
-                    <MenuItem onAction="#adatbazismegnyit" text="Töröl" />
+                    <MenuItem onAction="#olvas" text="Olvas" />
+                    <MenuItem onAction="#olvas2" text="Olvas 2" />
+                    <MenuItem onAction="#ir" text="Ír" />
+                    <MenuItem onAction="#modosit" text="Módosít" />
+                    <MenuItem onAction="#torol" text="Töröl" />
                 </items>
             </Menu>
         </menus>
@@ -28,6 +28,14 @@
             <Menu text="SOAP">
                 <items>
                     <MenuItem onAction="#TesztMetod" text="Grafikon" />
+                </items>
+            </Menu>
+        </menus>
+        <menus>
+            <Menu text="Párhuzamos feladat">
+                <items>
+                    <MenuItem onAction="#parhuzam" text="Párhuzamos feladat" />
+
                 </items>
             </Menu>
         </menus>
@@ -44,6 +52,8 @@
                 </items>
             </Menu>
         </menus>
+          
+        
     </MenuBar>
    <VBox prefHeight="200.0" prefWidth="100.0">
       <children>

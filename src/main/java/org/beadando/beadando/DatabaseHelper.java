@@ -1,4 +1,4 @@
-package org.beadando.database;
+package org.beadando.beadando;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

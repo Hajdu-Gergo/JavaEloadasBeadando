@@ -114,7 +114,7 @@ public class MNBController {
     }
 
     public void adatbazismegnyit(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("crud.fxml"));
         Scene scene = new Scene(root);
 
         Stage stage = new Stage();

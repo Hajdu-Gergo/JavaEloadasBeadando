@@ -7,10 +7,10 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-public class Main extends Application {
+public class Crud extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(new File("src/main/resources/main.fxml").toURI().toURL());
+        FXMLLoader loader = new FXMLLoader(new File("src/main/resources/crud.fxml").toURI().toURL());
 
         Scene scene = new Scene(loader.load());
         primaryStage.setScene(scene);

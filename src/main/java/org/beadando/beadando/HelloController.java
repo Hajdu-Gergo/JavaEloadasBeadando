@@ -120,4 +120,16 @@ public class HelloController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
+
+    public void parhuzam(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("parhuzam.fxml"));
+        Scene scene = new Scene(root);
+
+        Stage stage = new Stage();
+
+        stage.setTitle("Parhuzam");
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
 }

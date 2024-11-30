@@ -5,6 +5,8 @@ import com.oanda.v20.RequestException;
 import com.oanda.v20.instrument.Candlestick;
 import com.oanda.v20.instrument.InstrumentCandlesResponse;
 import com.oanda.v20.primitives.DateTime;
+import com.oanda.v20.trade.Trade;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,6 +30,9 @@ public class ForexController implements Initializable {
 
     @FXML
     TableView<Map.Entry<String, String>> tablazat;
+
+    @FXML
+    TableView<Trade> tabla3;
 
     @FXML
     ComboBox<String> devizapar;
@@ -73,6 +78,31 @@ public class ForexController implements Initializable {
             menny.setValue(100);
         } catch (Exception e) {
             System.out.println("menny nem került felöltés!");
+        }
+        try {
+            TableColumn<Trade, String> idColumn = new TableColumn<>("ID");
+            idColumn.setCellValueFactory(cellData ->
+                    new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
+
+            // Oszlop létrehozása az instrumenthez
+            TableColumn<Trade, String> instrumentColumn = new TableColumn<>("Instrument");
+            instrumentColumn.setCellValueFactory(cellData ->
+                    new SimpleStringProperty());
+
+            // Oszlop létrehozása az árhoz
+            TableColumn<Trade, Double> priceColumn = new TableColumn<>("Price");
+            priceColumn.setCellValueFactory(cellData ->
+                    new SimpleDoubleProperty().asObject());
+
+            // Oszlop létrehozása a nyitási időhöz
+            TableColumn<Trade, String> openTimeColumn = new TableColumn<>("Open Time");
+            openTimeColumn.setCellValueFactory(cellData ->
+                    new SimpleStringProperty(cellData.getValue().getOpenTime().toString()));
+
+            // Oszlopok hozzáadása a táblázathoz
+            tabla3.getColumns().addAll(idColumn, instrumentColumn, priceColumn, openTimeColumn);
+        } catch (Exception e) {
+            System.out.println("Táblázat nem került feltöltésre!");
         }
 
 
@@ -194,5 +224,10 @@ public class ForexController implements Initializable {
     public void pozzar(ActionEvent actionEvent) {
         System.out.println("Pozició zárása...");
         Oanda.closeTrade(pozaz.getText());
+    }
+
+    public void frissites(ActionEvent actionEvent) {
+        ObservableList<Trade> tradeData = FXCollections.observableArrayList(Oanda.getTrades());
+        tabla3.setItems(tradeData);
     }
 }

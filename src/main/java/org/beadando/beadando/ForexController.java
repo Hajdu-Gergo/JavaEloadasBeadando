@@ -50,7 +50,9 @@ public class ForexController implements Initializable {
     LineChart<String, Number> histgraf;
 
     @FXML
-    TextField menny;
+    ComboBox<Integer> menny;
+    @FXML
+    TextField pozaz;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -64,7 +66,13 @@ public class ForexController implements Initializable {
             irany.getItems().addAll("Vásárlás","Eladás");
             irany.setValue("Vásárlás");
         } catch (Exception e) {
-            System.out.println("irány nem került felöltés!");
+            System.out.println("irany nem került felöltés!");
+        }
+        try {
+            menny.getItems().addAll(100,200,300,400,500,600,700,800,900,1000);
+            menny.setValue(100);
+        } catch (Exception e) {
+            System.out.println("menny nem került felöltés!");
         }
 
 
@@ -166,7 +174,6 @@ public class ForexController implements Initializable {
         grafkirajzol(data);
     }
     public void grafkirajzol(ObservableList<Map.Entry<String, String>>  map) {
-        System.out.println("Grafikon kirajzolása11...");
         XYChart.Series<String, Number> series = new XYChart.Series<>();
 
         System.out.println("Grafikon kirajzolása...");
@@ -181,6 +188,11 @@ public class ForexController implements Initializable {
 
     public void poznyitas(ActionEvent actionEvent) throws ExecuteException, RequestException {
         Integer direction = irany.getValue().equals("Vásárlás") ? 1 : -1;
-        Oanda.openTrade(devizapar.getValue(), Integer.parseInt(menny.getText()) * direction);
+        Oanda.openTrade(devizapar.getValue(), menny.getValue() * direction);
+    }
+
+    public void pozzar(ActionEvent actionEvent) {
+        System.out.println("Pozició zárása...");
+        Oanda.closeTrade(pozaz.getText());
     }
 }

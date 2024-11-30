@@ -39,7 +39,7 @@
                   <Insets top="4.0" />
                </padding>
             </Label>
-            <TextField fx:id="menny" />
+            <ComboBox fx:id="menny" prefWidth="150.0"/>
          </children>
          <padding>
             <Insets bottom="5.0" left="10.0" top="5.0" />

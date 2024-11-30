@@ -39,7 +39,7 @@
                     <MenuItem onAction="#aktarak" text="Aktuális árak" />
                     <MenuItem onAction="#histarak" text="Historikus árak" />
                     <MenuItem onAction="#poznyit" text="Pozíció nyitás" />
-                    <MenuItem onAction="#TesztMetod" text="Pozíció zárás" />
+                    <MenuItem onAction="#pozzar" text="Pozíció zárás" />
                     <MenuItem onAction="#TesztMetod" text="Nyitott pozíciók" />
                 </items>
             </Menu>

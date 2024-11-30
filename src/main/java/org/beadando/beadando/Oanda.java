@@ -99,5 +99,29 @@ public class Oanda {
         return null;
 
     }
+    public static List<Trade> getTrades() {
+        Context ctx = new Context("https://api-fxpractice.oanda.com", "671b81420c1e7e9020aa39a044555251-23066734340c434485b049f98ee82a83");
+        AccountID accountID = new AccountID("101-004-27055954-001");
+        try {
+            return ctx.trade.list(accountID).getTrades();
+        } catch (Exception e) {
+            System.out.println("Oanda API hiba - \nÜzenet: " + e.getMessage());
+            return null;
+        }
+    }
+
+
+    public static void closeTrade(String tradeID) {
+        Context ctx = new Context("https://api-fxpractice.oanda.com", "e2cb5ade7b1d388aa7f72cdf8c74777e-da75f9dffbfe5b8b9b883149da2f030b");
+        AccountID accountID = new AccountID("101-004-30473865-001");
+        TradeSpecifier tradeSpecifier = new TradeSpecifier(tradeID);
+        try {
+            TradeCloseRequest request = new TradeCloseRequest(accountID, tradeSpecifier);
+            ctx.trade.close(request);
+            System.out.println("Trade closed");
+        } catch (Exception e) {
+            System.out.println("Oanda API hiba - \nÜzenet: " + e.getMessage());
+        }
+    }
 
 }

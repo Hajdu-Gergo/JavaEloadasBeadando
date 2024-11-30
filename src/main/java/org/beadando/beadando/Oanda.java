@@ -1,6 +1,7 @@
 package org.beadando.beadando;
 
 import com.oanda.v20.Context;
+import com.oanda.v20.ContextBuilder;
 import com.oanda.v20.ExecuteException;
 import com.oanda.v20.RequestException;
 import com.oanda.v20.account.AccountID;
@@ -22,6 +23,7 @@ import com.oanda.v20.trade.TradeSpecifier;
 import com.oanda.v20.transaction.Transaction;
 import com.oanda.v20.transaction.TransactionID;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -73,6 +75,29 @@ public class Oanda {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static TransactionID openTrade(String instrument, int units) {
+        Context ctx1 = new Context("https://api-fxpractice.oanda.com", "e2cb5ade7b1d388aa7f72cdf8c74777e-da75f9dffbfe5b8b9b883149da2f030b");
+        AccountID accountID1 = new AccountID("101-004-30473865-001");
+        InstrumentName instrumentName = new InstrumentName(instrument);
+        try {
+            OrderCreateRequest request = new OrderCreateRequest(accountID1);
+            MarketOrderRequest marketOrderRequest = new MarketOrderRequest();
+            System.out.println("Instrument: " + instrumentName);
+            System.out.println("Units: " + units);
+            System.out.println("Request: " + request);
+            marketOrderRequest.setInstrument(instrumentName);
+            marketOrderRequest.setUnits(units);
+            System.out.println("MarketOrderRequest: " + marketOrderRequest);
+            request.setOrder(marketOrderRequest);
+            OrderCreateResponse response = ctx1.order.create(request);
+            return response.getOrderFillTransaction().getId();
+        } catch (Exception e) {
+            System.out.println("Oanda API hiba - \nÜzenet: " + e.getMessage());
+        }
+        return null;
+
     }
 
 }

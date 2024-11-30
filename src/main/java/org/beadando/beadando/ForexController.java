@@ -1,5 +1,7 @@
 package org.beadando.beadando;
 
+import com.oanda.v20.ExecuteException;
+import com.oanda.v20.RequestException;
 import com.oanda.v20.instrument.Candlestick;
 import com.oanda.v20.instrument.InstrumentCandlesResponse;
 import com.oanda.v20.primitives.DateTime;
@@ -29,6 +31,8 @@ public class ForexController implements Initializable {
 
     @FXML
     ComboBox<String> devizapar;
+    @FXML
+    ComboBox<String> irany;
 
     @FXML
     Label kiir;
@@ -45,10 +49,24 @@ public class ForexController implements Initializable {
     @FXML
     LineChart<String, Number> histgraf;
 
+    @FXML
+    TextField menny;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        devizapar.getItems().addAll("EUR_HUF","USD_HUF","GBP_HUF","EUR_USD", "USD_JPY", "GBP_USD", "USD_CHF", "EUR_GBP", "EUR_JPY", "EUR_CHF", "AUD_USD", "USD_CAD", "NZD_USD");
-        devizapar.setValue("EUR_HUF");
+        try {
+            devizapar.getItems().addAll("EUR_HUF","USD_HUF","GBP_HUF","EUR_USD", "USD_JPY", "GBP_USD", "USD_CHF", "EUR_GBP", "EUR_JPY", "EUR_CHF", "AUD_USD", "USD_CAD", "NZD_USD");
+            devizapar.setValue("EUR_HUF");
+        } catch (Exception e) {
+            System.out.println("devizapar nem került felöltésre!");
+        }
+        try {
+            irany.getItems().addAll("Vásárlás","Eladás");
+            irany.setValue("Vásárlás");
+        } catch (Exception e) {
+            System.out.println("irány nem került felöltés!");
+        }
+
 
     }
 
@@ -161,4 +179,8 @@ public class ForexController implements Initializable {
         histgraf.getData().add(series);
     }
 
+    public void poznyitas(ActionEvent actionEvent) throws ExecuteException, RequestException {
+        Integer direction = irany.getValue().equals("Vásárlás") ? 1 : -1;
+        Oanda.openTrade(devizapar.getValue(), Integer.parseInt(menny.getText()) * direction);
+    }
 }

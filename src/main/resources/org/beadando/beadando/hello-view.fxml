@@ -31,6 +31,19 @@
                 </items>
             </Menu>
         </menus>
+
+        <menus>
+            <Menu text="FOREX">
+                <items>
+                    <MenuItem onAction="#szamlainfo" text="Számlainformáció" />
+                    <MenuItem onAction="#TesztMetod" text="Aktuális árak" />
+                    <MenuItem onAction="#TesztMetod" text="Historikus árak" />
+                    <MenuItem onAction="#TesztMetod" text="Pozíció nyitás" />
+                    <MenuItem onAction="#TesztMetod" text="Pozíció zárás" />
+                    <MenuItem onAction="#TesztMetod" text="Nyitott pozíciók" />
+                </items>
+            </Menu>
+        </menus>
     </MenuBar>
    <VBox prefHeight="200.0" prefWidth="100.0">
       <children>

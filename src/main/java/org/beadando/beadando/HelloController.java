@@ -72,4 +72,16 @@ public class HelloController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
+
+    public void szamlainfo(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("FOREX/Szamlainfo.fxml"));
+        Scene scene = new Scene(root);
+
+        Stage stage = new Stage();
+
+        stage.setTitle("Crud");
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
 }

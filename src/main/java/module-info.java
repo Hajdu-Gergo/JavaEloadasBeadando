@@ -11,6 +11,7 @@ module org.beadando.beadando {
     requires java.xml;
     requires java.sql;
     requires v20;
+    requires java.management;
 
 
     opens org.beadando.beadando to javafx.fxml;

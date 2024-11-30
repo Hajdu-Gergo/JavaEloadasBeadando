@@ -38,8 +38,20 @@ public class Oanda {
             } catch (Exception e) {
                 return null;
             }
+    }
+    public static String getPricing(String instrument) {
+        Context ctx = new Context("https://api-fxpractice.oanda.com", "e2cb5ade7b1d388aa7f72cdf8c74777e-da75f9dffbfe5b8b9b883149da2f030b");
+        AccountID accountID = new AccountID("101-004-30473865-001");
+        PricingGetRequest request = new PricingGetRequest(accountID, List.of(instrument));
+        PricingGetResponse response;
 
-
+        try {
+            response = ctx.pricing.get(request);
+            System.out.println("Pricing: " + response);
+            return response.getPrices().toString();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }

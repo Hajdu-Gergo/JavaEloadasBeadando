@@ -36,7 +36,7 @@
             <Menu text="FOREX">
                 <items>
                     <MenuItem onAction="#szamlainfo" text="Számlainformáció" />
-                    <MenuItem onAction="#TesztMetod" text="Aktuális árak" />
+                    <MenuItem onAction="#aktarak" text="Aktuális árak" />
                     <MenuItem onAction="#TesztMetod" text="Historikus árak" />
                     <MenuItem onAction="#TesztMetod" text="Pozíció nyitás" />
                     <MenuItem onAction="#TesztMetod" text="Pozíció zárás" />

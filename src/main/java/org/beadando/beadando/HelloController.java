@@ -79,7 +79,18 @@ public class HelloController {
 
         Stage stage = new Stage();
 
-        stage.setTitle("Crud");
+        stage.setTitle("Számlalekérdezés");
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public void aktarak(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("FOREX/Aktualisarak.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+
+        stage.setTitle("Aktuális árak");
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();

@@ -1,4 +1,4 @@
-# Java alkalmazások -Előadás beadanó
+# Java alkalmazások - Előadás beadandó
 
 JavaFX alkalmazás megadott funkcionalitással.
 Felhasznált adatbázis: Forma-1

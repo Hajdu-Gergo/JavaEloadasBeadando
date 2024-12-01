@@ -11,7 +11,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="270.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.beadando.beadando.ForexController">
    <children>
-      <Label text="Histórikus árak">
+      <Label text="Pozíció nyitás">
          <font>
             <Font size="24.0" />
          </font>

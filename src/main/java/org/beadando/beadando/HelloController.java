@@ -184,7 +184,7 @@ public class HelloController {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
 
-        stage.setTitle("Pozíció nyitás");
+        stage.setTitle("Pozíció zárás");
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
